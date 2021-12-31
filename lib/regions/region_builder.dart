@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prism_flutter/regions/region_manager.dart';
 
-class RegionBuilder extends StatefulWidget {
+class RegionBuilder extends StatelessWidget {
   final RegionManager regionManager;
   final String regionName;
   final Widget Function(Widget child)? singleChild;
@@ -19,21 +19,16 @@ class RegionBuilder extends StatefulWidget {
   }
 
   @override
-  _RegionBuilderState createState() => _RegionBuilderState();
-}
-
-class _RegionBuilderState extends State<RegionBuilder> {
-  @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: widget.regionManager[widget.regionName],
+      stream: regionManager[regionName],
       builder: (BuildContext context, AsyncSnapshot<List<RegionRegistration>> snapshot) {
-        if (widget.singleChild != null) {
-          return singleChildStrategy(widget.singleChild!, snapshot.data);
-        } else if (widget.multiChild != null) {
-          return multiChildStrategy(widget.multiChild!, snapshot.data);
+        if (singleChild != null) {
+          return singleChildStrategy(singleChild!, snapshot.data);
+        } else if (multiChild != null) {
+          return multiChildStrategy(multiChild!, snapshot.data);
         }
-        throw Exception("Cannot have a state without either a container or a list");
+        throw Exception("Cannot have a state without either a singleChild method or a multiChild");
       },
     );
   }
