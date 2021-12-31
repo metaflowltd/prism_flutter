@@ -5,7 +5,7 @@ import 'package:prism_flutter/regions/region_manager.dart';
 class RegionBuilder extends StatefulWidget {
   final RegionManager regionManager;
   final String regionName;
-  final Container Function(Widget child)? singleChild;
+  final Widget Function(Widget child)? singleChild;
   final ListView Function(List<Widget> children)? multiChild;
 
   RegionBuilder({
@@ -39,7 +39,7 @@ class _RegionBuilderState extends State<RegionBuilder> {
   }
 
   @protected
-  Widget singleChildStrategy(Container Function(Widget child) singleChild, List<RegionRegistration>? data) {
+  Widget singleChildStrategy(Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
     final last = data.last;
     return singleChild(last.registration());
