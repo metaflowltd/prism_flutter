@@ -1,3 +1,3 @@
 abstract class Module {
-  void init();
+  void init(Object container);
 }

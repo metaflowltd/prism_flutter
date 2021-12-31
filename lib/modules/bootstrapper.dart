@@ -8,21 +8,22 @@ abstract class PrismBootstrapper {
   ModuleCatalog createModuleCatalog();
 
   @protected
-  void initModules() {
+  void initModules(Object container) {
     for (var module in _catalog.modules) {
-      module.init();
+      module.init(container);
     }
   }
 
   @protected
-  void createContainer() {}
+  Object createContainer();
 
   @protected
-  void configureContainer() {}
+  void configureContainer(Object container) {}
 
   void run() {
     _catalog = createModuleCatalog();
-    createContainer();
-    initModules();
+    final container = createContainer();
+    configureContainer(container);
+    initModules(container);
   }
 }

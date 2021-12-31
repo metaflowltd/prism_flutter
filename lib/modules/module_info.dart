@@ -1,5 +1,5 @@
 class ModuleInfo {
-  final void Function() init;
+  final void Function(Object container) init;
 
   ModuleInfo(this.init);
 }
