@@ -43,7 +43,19 @@ class RegionBuilder extends StatelessWidget {
   @protected
   Widget multiChildStrategy(ListView Function(List<Widget> children) multiChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
-
+    data.sort((a, b) {
+      if (a.metadata == null || a.metadata is! MultiChildMetadata) return 0;
+      if (b.metadata == null || b.metadata is! MultiChildMetadata) return 0;
+      final first = a.metadata as MultiChildMetadata;
+      final second = b.metadata as MultiChildMetadata;
+      if (first.order == second.order) return 0;
+      return (first.order < second.order) ? -1 : 1;
+    });
     return multiChild(data.map((e) => e.registration()).toList());
   }
+}
+
+class MultiChildMetadata extends RegionMetadata {
+  final double order;
+  MultiChildMetadata({this.order = 1.0});
 }
