@@ -1,7 +1,13 @@
 library prism_flutter;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+//Regions
+export 'regions/region_builder.dart';
+export 'regions/region_manager.dart';
+//PubSub
+export "pub_sub/event_aggregator.dart";
+//Modules
+export 'modules/bootstrapper.dart';
+export 'modules/get_it_bootstrapper.dart';
+export 'modules/module.dart';
+export 'modules/module_catalog.dart';
+export 'modules/module_info.dart';
