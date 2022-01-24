@@ -57,5 +57,5 @@ class RegionBuilder extends StatelessWidget {
 
 class MultiChildMetadata extends RegionMetadata {
   final double order;
-  MultiChildMetadata({this.order = 1.0});
+  MultiChildMetadata({required String key, this.order = 1.0}) : super(key);
 }

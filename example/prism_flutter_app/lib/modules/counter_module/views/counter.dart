@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:prism_flutter/pub_sub/event_aggregator.dart';
+import 'package:prism_flutter/regions/region_manager.dart';
 import 'package:prism_flutter_app/events/add_event.dart';
+import 'package:prism_flutter_app/main.dart';
 
 class Counter extends StatefulWidget {
   final String text;
@@ -21,6 +23,8 @@ class _CounterState extends State<Counter> {
     widget.eventAggregator.getEvent<AddEvent>()!.subscribe((value) {
       setState(() {
         _counter = value;
+        if (_counter == 4)
+          container<RegionManager>().unregisterView("main", "shalva");
       });
     });
   }

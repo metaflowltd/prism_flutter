@@ -15,6 +15,7 @@ class AppModule extends Module {
     regionManager.registerView(
         "action",
         RegionRegistration(
+            metadata: RegionMetadata("add"),
             registration: () => AddButton(
                   eventAggregator: eventAggregator,
                 )));

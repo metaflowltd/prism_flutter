@@ -15,7 +15,7 @@ class CounterModule extends Module {
     regionManager.registerView(
         "main",
         RegionRegistration(
-            metadata: MultiChildMetadata(order: 2.0),
+            metadata: MultiChildMetadata(key: "shalva", order: 2.0),
             registration: () => Counter(
                   text: "Shalva :",
                   eventAggregator: eventAggregator,
@@ -23,7 +23,7 @@ class CounterModule extends Module {
     regionManager.registerView(
         "main",
         RegionRegistration(
-            metadata: MultiChildMetadata(order: 1.0),
+            metadata: MultiChildMetadata(key: "cats", order: 1.0),
             registration: () => Counter(
                   text: "Bad Cats: ",
                   eventAggregator: eventAggregator,
