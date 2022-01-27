@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
 class RegionManager {
@@ -34,7 +33,7 @@ class RegionManager {
 
 class RegionRegistration {
   final RegionMetadata metadata;
-  final Widget Function() registration;
+  final dynamic Function() registration;
 
   RegionRegistration({
     required this.metadata,

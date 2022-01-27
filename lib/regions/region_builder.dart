@@ -5,6 +5,7 @@ import 'package:prism_flutter/regions/region_manager.dart';
 class RegionBuilder extends StatelessWidget {
   final RegionManager regionManager;
   final String regionName;
+  final Widget Function(dynamic child)? templateChild;
   final Widget Function(Widget child)? singleChild;
   final ListView Function(List<Widget> children)? multiChild;
 
@@ -14,6 +15,7 @@ class RegionBuilder extends StatelessWidget {
     required this.regionName,
     this.singleChild,
     this.multiChild,
+    this.templateChild,
   }) : super(key: key) {
     assert(singleChild != null || multiChild != null, "Cannot provide both a singleChild and a multiChild");
   }
@@ -33,25 +35,29 @@ class RegionBuilder extends StatelessWidget {
     );
   }
 
+  Widget _getWidgetFromRegistration(RegionRegistration registration) {
+    final child = registration.registration();
+    return (child is Widget || templateChild == null) ? child as Widget : templateChild!(child);
+  }
+
   @protected
   Widget singleChildStrategy(Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
-    final last = data.last;
-    return singleChild(last.registration());
+    return singleChild(_getWidgetFromRegistration(data.last));
   }
 
   @protected
   Widget multiChildStrategy(ListView Function(List<Widget> children) multiChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
     data.sort((a, b) {
-      if (a.metadata == null || a.metadata is! MultiChildMetadata) return 0;
-      if (b.metadata == null || b.metadata is! MultiChildMetadata) return 0;
+      if (a.metadata is! MultiChildMetadata) return 0;
+      if (b.metadata is! MultiChildMetadata) return 0;
       final first = a.metadata as MultiChildMetadata;
       final second = b.metadata as MultiChildMetadata;
       if (first.order == second.order) return 0;
       return (first.order < second.order) ? -1 : 1;
     });
-    return multiChild(data.map((e) => e.registration()).toList());
+    return multiChild(data.map((e) => _getWidgetFromRegistration(e)).toList());
   }
 }
 
