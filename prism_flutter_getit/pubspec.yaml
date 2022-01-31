@@ -10,9 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  prism_flutter_core:
-    path: ../prism_flutter_core/
   get_it: ^7.2.0
+
+  prism_flutter_core:
+    git:
+      url: git@github.com:metaflowltd/prism_flutter.git
+      path: prism_flutter_core
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
