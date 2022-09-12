@@ -21,6 +21,7 @@ abstract class PrismBootstrapper {
   @protected
   void configureContainer(Object container) {}
 
+  @mustCallSuper
   void run() {
     catalog = createModuleCatalog();
     final container = createContainer();

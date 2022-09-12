@@ -1,7 +1,4 @@
 library prism_flutter_go_router;
 
-import 'package:go_router/go_router.dart';
-
-mixin RoutesInModule {
-  List<GoRoute> getRoutes();
-}
+export 'modules/go_router_bootstrapper.dart';
+export 'modules/go_router_module.dart';

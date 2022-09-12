@@ -16,6 +16,10 @@ dependencies:
     git:
       url: git@github.com:metaflowltd/prism_flutter.git
       path: prism_flutter_core
+  prism_flutter_getit:
+    git:
+      url: git@github.com:metaflowltd/prism_flutter.git
+      path: prism_flutter_getit
 
 dev_dependencies:
   flutter_test:
