@@ -2,14 +2,15 @@ import 'package:flutter/widgets.dart';
 import 'package:prism_flutter_core/modules/module_catalog.dart';
 
 abstract class PrismBootstrapper {
-  late ModuleCatalog _catalog;
+  @protected
+  late ModuleCatalog catalog;
 
   @protected
   ModuleCatalog createModuleCatalog();
 
   @protected
   void initModules(Object container) {
-    for (var module in _catalog.modules) {
+    for (var module in catalog.modules) {
       module.init(container);
     }
   }
@@ -21,7 +22,7 @@ abstract class PrismBootstrapper {
   void configureContainer(Object container) {}
 
   void run() {
-    _catalog = createModuleCatalog();
+    catalog = createModuleCatalog();
     final container = createContainer();
     configureContainer(container);
     initModules(container);
