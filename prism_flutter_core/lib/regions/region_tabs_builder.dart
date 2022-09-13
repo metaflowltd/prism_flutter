@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:prism_flutter_core/regions/region_manager.dart';
 
 class RegionTabsBuilder extends StatefulWidget {
@@ -25,7 +22,10 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
       stream: widget.regionManager[widget.regionName],
       builder: (context, AsyncSnapshot<List<RegionRegistration>> snapshot) {
         final registrations = snapshot.data;
-        _tabs = registrations?.map((registration) => registration.widgetFromRegistration()).toList();
+        _tabs = registrations
+            ?.where((element) => element.metadata is TabsRegionMetadata)
+            .map((registration) => registration.widgetFromRegistration())
+            .toList();
 
         // Apple enforces that there should be at least 2 tabs
         final numberOfTabs = _tabs?.length ?? 0;
@@ -33,10 +33,16 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
 
         return CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
-            items: registrations
-                    ?.map((registration) =>
-                        BottomNavigationBarItem(label: registration.metadata.key, icon: const Icon(Icons.home)))
-                    .toList() ??
+            items: registrations?.map((registration) {
+                  final metadata = registration.metadata as TabsRegionMetadata;
+                  return BottomNavigationBarItem(
+                    label: metadata.label ?? metadata.key,
+                    icon: metadata.icon,
+                    activeIcon: metadata.activeIcon,
+                    backgroundColor: metadata.backgroundColor,
+                    tooltip: metadata.tooltip,
+                  );
+                }).toList() ??
                 [],
           ),
           tabBuilder: (BuildContext context, index) {
@@ -49,5 +55,17 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
 }
 
 class TabsRegionMetadata extends RegionMetadata {
-  TabsRegionMetadata(String key) : super(key);
+  final Widget icon;
+  final String? label;
+  final Widget? activeIcon;
+  final Color? backgroundColor;
+  final String? tooltip;
+  TabsRegionMetadata({
+    required String key,
+    required this.icon,
+    this.label,
+    this.activeIcon,
+    this.backgroundColor,
+    this.tooltip,
+  }) : super(key);
 }
