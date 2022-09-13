@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
 class RegionManager {
@@ -39,6 +40,13 @@ class RegionRegistration {
     required this.metadata,
     required this.registration,
   });
+}
+
+extension RegionRegistrationExtensions on RegionRegistration {
+  Widget widgetFromRegistration([Widget Function(dynamic child)? templateChild]) {
+    final child = registration();
+    return (child is Widget || templateChild == null) ? child as Widget : templateChild(child);
+  }
 }
 
 class RegionMetadata {

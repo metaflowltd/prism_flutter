@@ -35,15 +35,10 @@ class RegionBuilder extends StatelessWidget {
     );
   }
 
-  Widget _getWidgetFromRegistration(RegionRegistration registration) {
-    final child = registration.registration();
-    return (child is Widget || templateChild == null) ? child as Widget : templateChild!(child);
-  }
-
   @protected
   Widget singleChildStrategy(Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
-    return singleChild(_getWidgetFromRegistration(data.last));
+    return singleChild(data.last.widgetFromRegistration(templateChild));
   }
 
   @protected
@@ -57,7 +52,7 @@ class RegionBuilder extends StatelessWidget {
       if (first.order == second.order) return 0;
       return (first.order < second.order) ? -1 : 1;
     });
-    return multiChild(data.map((e) => _getWidgetFromRegistration(e)).toList());
+    return multiChild(data.map((e) => e.widgetFromRegistration(templateChild)).toList());
   }
 }
 
