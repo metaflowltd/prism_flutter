@@ -7,7 +7,7 @@ abstract class GoRouterBootstrapper extends GetItBootstrapper {
   @override
   void run() {
     super.run();
-    final routes = catalog.modules
+    final routes = modules
         .whereType<GoRouterModule>()
         .expand(
           (module) => module.configureRoutes(),
