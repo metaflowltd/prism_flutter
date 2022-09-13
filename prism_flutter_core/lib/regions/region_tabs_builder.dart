@@ -26,6 +26,11 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
       builder: (context, AsyncSnapshot<List<RegionRegistration>> snapshot) {
         final registrations = snapshot.data;
         _tabs = registrations?.map((registration) => registration.widgetFromRegistration()).toList();
+
+        // Apple enforces that there should be at least 2 tabs
+        final numberOfTabs = _tabs?.length ?? 0;
+        if (numberOfTabs < 2) return const SizedBox.shrink();
+
         return CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
             items: registrations
