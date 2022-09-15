@@ -11,7 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  go_router: ^4.4.1
+  go_router:
+    git:
+      url: git@github.com:metaflowltd/flutter_team_packages.git
+      path: packages/go_router
+      ref: go_router_v5
   prism_flutter_core:
     git:
       url: git@github.com:metaflowltd/prism_flutter.git
