@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prism_flutter_core/regions/region_manager.dart';
+import 'package:prism_flutter_core/regions/region_tabs_metadata.dart';
 
 class RegionTabsBuilder extends StatefulWidget {
   final RegionManager regionManager;
@@ -54,18 +55,4 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
   }
 }
 
-class TabsRegionMetadata extends RegionMetadata {
-  final Widget icon;
-  final String? label;
-  final Widget? activeIcon;
-  final Color? backgroundColor;
-  final String? tooltip;
-  TabsRegionMetadata({
-    required String key,
-    required this.icon,
-    this.label,
-    this.activeIcon,
-    this.backgroundColor,
-    this.tooltip,
-  }) : super(key);
-}
+
