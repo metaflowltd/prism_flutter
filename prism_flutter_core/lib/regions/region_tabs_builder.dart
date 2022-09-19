@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prism_flutter_core/regions/region_manager.dart';
+import 'package:prism_flutter_core/regions/region_registration.dart';
 import 'package:prism_flutter_core/regions/region_tabs_metadata.dart';
 
 class RegionTabsBuilder extends StatefulWidget {
@@ -26,6 +27,8 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
         _tabs = registrations
             ?.where((element) => element.metadata is TabsRegionMetadata)
             .map((registration) => registration.widgetFromRegistration())
+            .where((element) => element != null)
+            .cast<Widget>()
             .toList();
 
         // Apple enforces that there should be at least 2 tabs
@@ -54,5 +57,3 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
     );
   }
 }
-
-

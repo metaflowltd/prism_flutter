@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
+import 'package:prism_flutter_core/regions/region_registration.dart';
+import 'package:prism_flutter_core/regions/region_widget_registration.dart';
 import 'package:rxdart/rxdart.dart';
 
 class RegionManager {
@@ -32,19 +34,11 @@ class RegionManager {
   Stream<List<RegionRegistration>>? operator [](String name) => _regions[name];
 }
 
-class RegionRegistration {
-  final RegionMetadata metadata;
-  final dynamic Function() registration;
-
-  RegionRegistration({
-    required this.metadata,
-    required this.registration,
-  });
-}
-
 extension RegionRegistrationExtensions on RegionRegistration {
-  Widget widgetFromRegistration([Widget Function(dynamic child)? templateChild]) {
+  Widget? widgetFromRegistration([Widget Function(dynamic child)? templateChild]) {
+    if (this is RegionWidgetRegistration) return registration() as Widget;
     final child = registration();
+    if (child is! Widget && templateChild == null) return null;
     return (child is Widget || templateChild == null) ? child as Widget : templateChild(child);
   }
 }

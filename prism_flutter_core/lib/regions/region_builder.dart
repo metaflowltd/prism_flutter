@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prism_flutter_core/regions/region_manager.dart';
+import 'package:prism_flutter_core/regions/region_registration.dart';
 
 class RegionBuilder extends StatelessWidget {
   final RegionManager regionManager;
@@ -38,7 +39,9 @@ class RegionBuilder extends StatelessWidget {
   @protected
   Widget singleChildStrategy(Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
-    return singleChild(data.last.widgetFromRegistration(templateChild));
+    final widget = data.last.widgetFromRegistration(templateChild);
+    if (widget == null) return const SizedBox.shrink();
+    return singleChild(widget);
   }
 
   @protected
@@ -52,7 +55,11 @@ class RegionBuilder extends StatelessWidget {
       if (first.order == second.order) return 0;
       return (first.order < second.order) ? -1 : 1;
     });
-    return multiChild(data.map((e) => e.widgetFromRegistration(templateChild)).toList());
+    return multiChild(data
+        .map((e) => e.widgetFromRegistration(templateChild))
+        .where((element) => element != null)
+        .cast<Widget>()
+        .toList());
   }
 }
 
