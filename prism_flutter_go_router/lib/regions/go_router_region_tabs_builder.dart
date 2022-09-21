@@ -32,7 +32,7 @@ class _GoRouterRegionTabsBuilderState extends State<GoRouterRegionTabsBuilder> {
             final registrations = snapshot.data;
             _rootRoutes = registrations
                 ?.where((element) => element.metadata is TabsRegionMetadata)
-                .map((registration) => registration.registration())
+                .map((registration) => registration.registration(context))
                 .cast<GoRoute>()
                 .toList();
 
