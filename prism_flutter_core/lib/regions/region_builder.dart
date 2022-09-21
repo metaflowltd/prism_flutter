@@ -27,9 +27,9 @@ class RegionBuilder extends StatelessWidget {
       stream: regionManager[regionName],
       builder: (BuildContext context, AsyncSnapshot<List<RegionRegistration>> snapshot) {
         if (singleChild != null) {
-          return singleChildStrategy(singleChild!, snapshot.data);
+          return singleChildStrategy(context, singleChild!, snapshot.data);
         } else if (multiChild != null) {
-          return multiChildStrategy(multiChild!, snapshot.data);
+          return multiChildStrategy(context, multiChild!, snapshot.data);
         }
         throw Exception("Cannot have a state without either a singleChild method or a multiChild");
       },
@@ -37,15 +37,15 @@ class RegionBuilder extends StatelessWidget {
   }
 
   @protected
-  Widget singleChildStrategy(Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
+  Widget singleChildStrategy(BuildContext context, Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
-    final widget = data.last.widgetFromRegistration(templateChild);
+    final widget = data.last.widgetFromRegistration(context, templateChild);
     if (widget == null) return const SizedBox.shrink();
     return singleChild(widget);
   }
 
   @protected
-  Widget multiChildStrategy(ListView Function(List<Widget> children) multiChild, List<RegionRegistration>? data) {
+  Widget multiChildStrategy(BuildContext context, ListView Function(List<Widget> children) multiChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
     data.sort((a, b) {
       if (a.metadata is! MultiChildMetadata) return 0;
@@ -56,7 +56,7 @@ class RegionBuilder extends StatelessWidget {
       return (first.order < second.order) ? -1 : 1;
     });
     return multiChild(data
-        .map((e) => e.widgetFromRegistration(templateChild))
+        .map((e) => e.widgetFromRegistration(context, templateChild))
         .where((element) => element != null)
         .cast<Widget>()
         .toList());

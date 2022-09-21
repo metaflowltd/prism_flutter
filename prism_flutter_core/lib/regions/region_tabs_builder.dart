@@ -26,7 +26,7 @@ class _RegionTabsBuilderState extends State<RegionTabsBuilder> {
         final registrations = snapshot.data;
         _tabs = registrations
             ?.where((element) => element.metadata is TabsRegionMetadata)
-            .map((registration) => registration.widgetFromRegistration())
+            .map((registration) => registration.widgetFromRegistration(context))
             .where((element) => element != null)
             .cast<Widget>()
             .toList();

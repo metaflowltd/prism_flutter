@@ -35,9 +35,9 @@ class RegionManager {
 }
 
 extension RegionRegistrationExtensions on RegionRegistration {
-  Widget? widgetFromRegistration([Widget Function(dynamic child)? templateChild]) {
-    if (this is RegionWidgetRegistration) return registration() as Widget;
-    final child = registration();
+  Widget? widgetFromRegistration(BuildContext context, [Widget Function(dynamic child)? templateChild]) {
+    if (this is RegionWidgetRegistration) return registration(context) as Widget;
+    final child = registration(context);
     if (child is! Widget && templateChild == null) return null;
     return (child is Widget || templateChild == null) ? child as Widget : templateChild(child);
   }
