@@ -16,4 +16,5 @@ class Event<T> extends EventBase {
   final Stream<T> _stream = PublishSubject<T>();
   void publish(T payload) => (_stream as PublishSubject<T>).add(payload);
   StreamSubscription<T> subscribe(void Function(T) action) => _stream.listen(action);
+  Stream<T> subscribeOnStream() => _stream.asBroadcastStream();
 }
