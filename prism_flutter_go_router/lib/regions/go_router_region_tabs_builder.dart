@@ -68,6 +68,6 @@ class _GoRouterRegionTabsBuilderState extends State<GoRouterRegionTabsBuilder> {
 
   void _onItemTapped(int index, BuildContext context) {
     final route = _rootRoutes![index];
-    route.goToTab();
+    route.goToTab(context);
   }
 }
