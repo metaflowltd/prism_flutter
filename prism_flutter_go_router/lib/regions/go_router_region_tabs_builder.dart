@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:prism_flutter_core/prism_flutter_core.dart';
+import 'package:prism_flutter_go_router/interfaces/tabs_route.dart';
 
 class GoRouterRegionTabsBuilder extends StatefulWidget {
   final RegionManager regionManager;
@@ -21,7 +22,8 @@ class GoRouterRegionTabsBuilder extends StatefulWidget {
 }
 
 class _GoRouterRegionTabsBuilderState extends State<GoRouterRegionTabsBuilder> {
-  List<GoRoute>? _rootRoutes;
+  List<TabsRoute>? _rootRoutes;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,7 @@ class _GoRouterRegionTabsBuilderState extends State<GoRouterRegionTabsBuilder> {
             _rootRoutes = registrations
                 ?.where((element) => element.metadata is TabsRegionMetadata)
                 .map((registration) => registration.registration(context))
-                .cast<GoRoute>()
+                .cast<TabsRoute>()
                 .toList();
 
             // Apple enforces that there should be at least 2 tabs
@@ -61,11 +63,11 @@ class _GoRouterRegionTabsBuilderState extends State<GoRouterRegionTabsBuilder> {
   int _calculateSelectedIndex(BuildContext context) {
     final GoRouter route = GoRouter.of(context);
     final String location = route.location;
-    return max(0, _rootRoutes!.indexWhere((element) => location.contains(element.path)));
+    return max(0, _rootRoutes!.indexWhere((element) => element.isTabLocation(location)));
   }
 
   void _onItemTapped(int index, BuildContext context) {
     final route = _rootRoutes![index];
-    GoRouter.of(context).go(route.path);
+    route.goToTab();
   }
 }

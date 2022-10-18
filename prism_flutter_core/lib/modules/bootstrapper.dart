@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:prism_flutter_core/modules/module_catalog.dart';
 import 'package:prism_flutter_core/prism_flutter_core.dart';
 
 abstract class PrismBootstrapper {
