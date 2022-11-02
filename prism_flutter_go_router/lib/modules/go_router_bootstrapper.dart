@@ -6,7 +6,7 @@ import 'package:prism_flutter_go_router/interfaces/module_route.dart';
 
 abstract class GoRouterBootstrapper extends GetItBootstrapper {
   @override
-  void run() {
+  Future<void> run() async {
     super.run();
     final routes = modules
         .whereType<GoRouterModule>()

@@ -17,7 +17,7 @@ abstract class PrismBootstrapper {
   }
 
   @protected
-  Future initModules(Object container) async {
+  Future<void> initModules(Object container) async {
     for (var module in modules) {
       await module.init(container);
     }
