@@ -17,9 +17,9 @@ abstract class PrismBootstrapper {
   }
 
   @protected
-  void initModules(Object container) {
+  Future initModules(Object container) async {
     for (var module in modules) {
-      module.init(container);
+      await module.init(container);
     }
   }
 
@@ -30,11 +30,11 @@ abstract class PrismBootstrapper {
   void configureContainer(Object container) {}
 
   @mustCallSuper
-  void run() {
+  Future<void> run() async {
     catalog = createModuleCatalog();
     final container = createContainer();
     configureContainer(container);
     createModules(container);
-    initModules(container);
+    await initModules(container);
   }
 }
