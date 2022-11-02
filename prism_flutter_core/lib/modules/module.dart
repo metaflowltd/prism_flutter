@@ -1,3 +1,3 @@
 abstract class Module<T> {
-  void init(T container);
+  Future<void> init(T container);
 }
