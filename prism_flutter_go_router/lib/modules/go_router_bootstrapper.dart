@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:prism_flutter_getit/prism_flutter_getit.dart';
-import 'package:prism_flutter_go_router/modules/go_router_module.dart';
 import 'package:prism_flutter_go_router/interfaces/module_route.dart';
+import 'package:prism_flutter_go_router/modules/go_router_module.dart';
 
 abstract class GoRouterBootstrapper extends GetItBootstrapper {
   @override
   Future<void> run() async {
-    super.run();
+    await super.run();
     final routes = modules
         .whereType<GoRouterModule>()
         .expand(
