@@ -8,7 +8,7 @@ class RegionBuilder extends StatelessWidget {
   final String regionName;
   final Widget Function(dynamic child)? templateChild;
   final Widget Function(Widget child)? singleChild;
-  final ListView Function(List<Widget> children)? multiChild;
+  final Widget Function(List<Widget> children)? multiChild;
 
   RegionBuilder({
     Key? key,
@@ -37,7 +37,8 @@ class RegionBuilder extends StatelessWidget {
   }
 
   @protected
-  Widget singleChildStrategy(BuildContext context, Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
+  Widget singleChildStrategy(
+      BuildContext context, Widget Function(Widget child) singleChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
     final widget = data.last.widgetFromRegistration(context, templateChild);
     if (widget == null) return const SizedBox.shrink();
@@ -45,7 +46,8 @@ class RegionBuilder extends StatelessWidget {
   }
 
   @protected
-  Widget multiChildStrategy(BuildContext context, ListView Function(List<Widget> children) multiChild, List<RegionRegistration>? data) {
+  Widget multiChildStrategy(
+      BuildContext context, Widget Function(List<Widget> children) multiChild, List<RegionRegistration>? data) {
     if (data == null || data.isEmpty) return const SizedBox.shrink();
     data.sort((a, b) {
       if (a.metadata is! MultiChildMetadata) return 0;
@@ -65,5 +67,5 @@ class RegionBuilder extends StatelessWidget {
 
 class MultiChildMetadata extends RegionMetadata {
   final double order;
-  MultiChildMetadata({required String key, this.order = 1.0}) : super(key);
+  MultiChildMetadata(String key, {this.order = 1.0}) : super(key);
 }
