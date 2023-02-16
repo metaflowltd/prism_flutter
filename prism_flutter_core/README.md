@@ -1,39 +1,72 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+    Provides infrastructure to develop modular flutter applications
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* Bootstrapping a module app, modules definitions and initialization.
+* Regions for injecting widgets in a loosely coupled fashion.
+* Publisher-Subscriber service for loosely coupled async event publishing. 
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Begin by introducing a bootstrapper to your app and implement your first module.
+Each module should have a class that extends Module.
+Once you have that module in place, you can create in the bootstrapper a catalog and add 
+your modules to it.
+In your main.dart you can initiate the boostrapper and call run.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
 
 ```dart
-const like = 'sample';
+void main() async {
+  final boostrapper = Bootstrapper();
+  await boostrapper.run();
+  runApp(child: const MyApp());
+}
+// T should be your dependency injection abstraction
+class TestModule extends Module<MyDI> {
+    @override
+    Future<void> init(MyDI container) {
+
+    final regionManager = container<RegionManager>();
+    regionManager.registerView(
+        "main",
+        RegionWidgetRegistration(
+            metadata: MultiChildMetadata("welcome", order: 1),
+            registration: (context) => const WelcomeWidget(),
+        ),
+      );
+    }
+}
+
+class Bootstrapper extends PrismBootstrapper {
+  @override
+  ModuleCatalog createModuleCatalog() {
+    final catalog = MemoryModuleCatalog();
+    catalog.addModule(ModuleInfo((c) => TestModule()))
+    return catalog;
+  }
+
+  @override
+  Object createContainer() => MyDI();
+}
+
+class MainWidget extends StatelessWidget {
+  const SettingsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RegionBuilder(
+                regionManager: MyDI().instance.get<RegionManager>(),
+                regionName: "main"
+                multiChild: (children) => ListView(children: children),
+              );
+  }
+}
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+More packages that enhance the usage or prism with common libraries such as GetIt and GoRouter will also be available.
+We would love feedback, ping at twitter: @arielbh if you have any questions.
+
