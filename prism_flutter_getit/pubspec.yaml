@@ -1,7 +1,7 @@
 name: prism_flutter_getit
-description: A new Flutter package project.
-version: 0.0.2
-homepage:
+description: Extension for Flutter.Prism.Core and adds get.it support
+version: 0.0.1
+homepage: https://github.com/metaflowltd/prism_flutter
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -11,12 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   get_it: ^7.2.0
-
-  prism_flutter_core:
-    git:
-      url: git@github.com:metaflowltd/prism_flutter.git
-      path: prism_flutter_core
-
+  prism_flutter_core: ^0.0.1+1
 
 dev_dependencies:
   flutter_test:

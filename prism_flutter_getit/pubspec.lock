@@ -126,12 +126,11 @@ packages:
   prism_flutter_core:
     dependency: "direct main"
     description:
-      path: prism_flutter_core
-      ref: HEAD
-      resolved-ref: "7324a9dc24a6d6bf61c13f28a58c94b0bda7abc4"
-      url: "git@github.com:metaflowltd/prism_flutter.git"
-    source: git
-    version: "0.0.1"
+      name: prism_flutter_core
+      sha256: "41d80994deca4e0ec83e4194bceb5b0e89ff6e6e46c8e0d12151f58a3a848dbf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+1"
   rxdart:
     dependency: transitive
     description:

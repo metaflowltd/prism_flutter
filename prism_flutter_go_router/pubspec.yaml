@@ -1,7 +1,7 @@
 name: prism_flutter_go_router
-description: A new Flutter package project.
+description: Extension for Flutter.Prism.Core and adds go_router support
 version: 0.0.1
-homepage:
+homepage: https://github.com/metaflowltd/prism_flutter
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
@@ -12,14 +12,9 @@ dependencies:
     sdk: flutter
 
   go_router: ^6.0.9
-  prism_flutter_core:
-    git:
-      url: git@github.com:metaflowltd/prism_flutter.git
-      path: prism_flutter_core
-  prism_flutter_getit:
-    git:
-      url: git@github.com:metaflowltd/prism_flutter.git
-      path: prism_flutter_getit
+  prism_flutter_core: ^0.0.1+1
+  prism_flutter_getit: ^0.0.1
+
 
 dev_dependencies:
   flutter_test:

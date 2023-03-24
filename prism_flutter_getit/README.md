@@ -1,39 +1,67 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+    Provides get_it implementation for Flutter.Prism.Core
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+## Description
+Flutter.Prism.Core is an extensible library that allow you to build modular applications
+Dependency Injection is a major aspect that helps design, manage and maintain that app's codebase.
+This library is using get.it as a concrete implementation for DI container.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Follow the instructions on building a Flutter app with Flutter.Prism.Core library as specified in it's [readme](https://github.com/metaflowltd/prism_flutter/blob/master/prism_flutter_core/README.md).
 
+Now, changes need to be made:
+    1. Inherit your bootstrapper from 'GetItBootstrapper'.
+    2. Inherit each of your modules from 'GetItModule'.
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
 
 ```dart
-const like = 'sample';
+void main() async {
+  final boostrapper = Bootstrapper();
+  await boostrapper.run();
+  runApp(child: const MyApp());
+}
+// T should be your dependency injection abstraction
+class TestModule extends GetItModule {
+    @override
+    Future<void> init(GetIt container) {
+
+    final regionManager = container<RegionManager>();
+    regionManager.registerView(
+        "main",
+        RegionWidgetRegistration(
+            metadata: MultiChildMetadata("welcome", order: 1),
+            registration: (context) => const WelcomeWidget(),
+        ),
+      );
+    }
+}
+
+class Bootstrapper extends GetItBootstrapper {
+  @override
+  ModuleCatalog createModuleCatalog() {
+    final catalog = MemoryModuleCatalog();
+    catalog.addModule(ModuleInfo((c) => TestModule()))
+    return catalog;
+  }
+}
+
+class MainWidget extends StatelessWidget {
+  const SettingsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RegionBuilder(
+                regionManager: MyDI().instance.get<RegionManager>(),
+                regionName: "main"
+                multiChild: (children) => ListView(children: children),
+              );
+  }
+}
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+More packages that enhance the usage or prism with common libraries such as GetIt and GoRouter will also be available.
+We would love feedback, ping at twitter: @arielbh if you have any questions.
+
