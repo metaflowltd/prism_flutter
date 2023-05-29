@@ -19,7 +19,10 @@ abstract class GoRouterBootstrapper extends GetItBootstrapper {
   }
 
   @protected
-  GoRouter createRouter(List<ModuleRoute> routes) {
-    return GoRouter(routes: routes.map((e) => e.toGoRoute()).toList());
+  GoRouter createRouter(List<ModuleRoute> routes, {String? initialLocation}) {
+    return GoRouter(
+      routes: routes.map((e) => e.toGoRoute()).toList(),
+      initialLocation: initialLocation,
+    );
   }
 }
