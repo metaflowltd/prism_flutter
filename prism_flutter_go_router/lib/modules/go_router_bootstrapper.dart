@@ -9,7 +9,7 @@ abstract class GoRouterBootstrapper extends GetItBootstrapper {
   Future<void> run() async {
     await super.run();
     final routes = modules
-        .whereType<GoRouterModule>()
+        .whereType<GoRouterModuleMixin>()
         .expand(
           (module) => module.configureRoutes(),
         )
