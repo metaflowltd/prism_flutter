@@ -1,6 +1,6 @@
 name: prism_flutter_go_router
 description: Extension for Flutter.Prism.Core and adds go_router support
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/metaflowltd/prism_flutter
 
 environment:
